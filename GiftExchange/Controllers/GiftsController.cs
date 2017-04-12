@@ -46,20 +46,20 @@ namespace GiftExchange.Controllers
 
             const string connectionString =
                             @"Server=localhost\SQLEXPRESS;Database=GiftExchangeDB;Trusted_Connection=True;";
-                using (var connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(connectionString))
+            {
+                var query = $"INSERT INTO [dbo].[PresentsFinal]([Contents],[GiftHint],[ColorWrapper],[Height],[Width],[Depth],[Weight],[IsOpened])" +
+                $"VALUES({Contents},{GiftHint},{ColorWrapper},{Height},{Width},{Depth},{Weight},{IsOpened})GO";
+                var cmd = new SqlCommand(query, connection);
+                connection.Open();
+                var reader = cmd.ExecuteReader();
+                while (reader.read())
                 {
-                    var query = $"INSERT INTO [dbo].[PresentsFinal]([Contents],[GiftHint],[ColorWrapper],[Height],[Width],[Depth],[Weight],[IsOpened])" +
-                    $"VALUES({Contents},{GiftHint},{ColorWrapper},{Height},{Width},{Depth},{Weight},{IsOpened})GO";
-                    var cmd = new SqlCommand(query, connection);
-                    connection.Open();
-                    var reader = cmd.ExecuteReader();
-                    while (reader.Read())
-                    {
-                        rv.Add(new Models.Presents(reader));
-                    }
-                    connection.Close();
-
+                    rv.add(new models.presents(reader));
                 }
+                connection.Close();
+
+            }
 
 
 

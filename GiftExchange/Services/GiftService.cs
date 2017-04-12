@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GiftExchange.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -30,6 +31,24 @@ namespace GiftExchange.Services
             }
                 return rv;
         }
-
+        public Presents AddGift (int id)
+        {
+            Presents gift = null;
+            using (var connection = new SqlConnection(connectionString))
+            {
+                var query = "SELECT";
+                var cmd = new SqlCommand(query, connection);
+                cmd.Parameters.AddWithValue("@Id", id);
+                connection.Open();
+                var reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    gift = new Presents(reader);
+                }
+                connection.Close();
+                
+            }
+            return gift;
+        }
     }
 }
