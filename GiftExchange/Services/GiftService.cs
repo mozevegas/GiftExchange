@@ -17,7 +17,7 @@ namespace GiftExchange.Services
             var rv = new List<Models.Presents>();
             using (var connection = new SqlConnection(connectionString))
             {
-                var query = "SELECT * FROM PresentsTable";
+                var query = "SELECT * FROM PresentsFinal";
                 var cmd = new SqlCommand(query, connection);
                 connection.Open();
                 var reader = cmd.ExecuteReader();
@@ -28,9 +28,6 @@ namespace GiftExchange.Services
                 connection.Close();
 
             }
-
-
-
                 return rv;
         }
 

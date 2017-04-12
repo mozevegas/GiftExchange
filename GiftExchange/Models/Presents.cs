@@ -14,10 +14,10 @@ namespace GiftExchange.Models
             this.Contents = reader["Contents"].ToString();
             this.GiftHint = reader["GiftHint"].ToString();
             this.ColorWrapper = reader["ColorWrapper"].ToString();
-            this.Height = (int)reader["Height"];
-            this.Width = (int)reader["Width"];
-            this.Depth = (int)reader["Depth"];
-            this.Weight = (int)reader["Weight"];
+            this.Height = (double?)reader["Height"];
+            this.Width = (double?)reader["Width"];
+            this.Depth = (double?)reader["Depth"];
+            this.Weight = (double?)reader["Weight"];
             this.IsOpened = (bool)reader["IsOpened"];
         }
 
@@ -25,10 +25,10 @@ namespace GiftExchange.Models
         public string Contents { get; set; }
         public string GiftHint { get; set; }
         public string ColorWrapper { get; set; }
-        public double Height { get; set; }
-        public double Width { get; set; }
-        public double Depth { get; set; }
-        public double Weight { get; set; }
+        public double? Height { get; set; }
+        public double? Width { get; set; }
+        public double? Depth { get; set; }
+        public double? Weight { get; set; }
         public bool IsOpened { get; set; }
     }
 }
