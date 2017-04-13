@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using GiftExchange.Services;
+using GiftExchange.Models;
 using System.Data.SqlClient;
 
 namespace GiftExchange.Controllers
@@ -34,35 +35,33 @@ namespace GiftExchange.Controllers
         [HttpPost]
         public ActionResult AddGift(FormCollection collection)
         {
-            // put into the database
-            var Contents = collection["Contents"];
-            var GiftHint = collection["GiftHint"];
-            var ColorWrapper = collection["ColorWrapper"];
-            var Height = collection["Height"];
-            var Width = collection["Width"];
-            var Depth = collection["Depth"];
-            var Weight = collection["Weight"];
-            var IsOpened = collection["IsOpened"];
+            //// reading the forms
+            //var Contents = collection["Contents"];
+            //var GiftHint = collection["GiftHint"];
+            //var ColorWrapper = collection["ColorWrapper"];
+            //var Height = collection["Height"];
+            //var Width = collection["Width"];
+            //var Depth = collection["Depth"];
+            //var Weight = collection["Weight"];
+            //var IsOpened = collection["IsOpened"];
 
-            const string connectionString =
-                            @"Server=localhost\SQLEXPRESS;Database=GiftExchangeDB;Trusted_Connection=True;";
-            using (var connection = new SqlConnection(connectionString))
+            // make a new gift
+            var PresentNew = new Presents()
             {
-                var query = $"INSERT INTO [dbo].[PresentsFinal]([Contents],[GiftHint],[ColorWrapper],[Height],[Width],[Depth],[Weight],[IsOpened])" +
-                $"VALUES({Contents},{GiftHint},{ColorWrapper},{Height},{Width},{Depth},{Weight},{IsOpened})GO";
-                var cmd = new SqlCommand(query, connection);
-                connection.Open();
-                var reader = cmd.ExecuteReader();
-                while (reader.read())
-                {
-                    rv.add(new models.presents(reader));
-                }
-                connection.Close();
+                // id = int.Parse(collection["id"]),
+                Contents = collection["Contents"].ToString(),
+                GiftHint = collection["GiftHint"].ToString(),
+                ColorWrapper = collection["ColorWrapper"].ToString(),
+                Height = double.Parse(collection["Height"]),
+                Width = double.Parse(collection["Width"]),
+                Depth = double.Parse(collection["Depth"]),
+                Weight = double.Parse(collection["Weight"]),
+                IsOpened = false //bool.Parse(collection["IsOpened"])
+            };
 
-            }
+            // put it in the database
 
-
-
+            GiftService.AddGiftDB(PresentNew);
 
             // send to index page
             return RedirectToAction("Index");

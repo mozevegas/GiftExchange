@@ -13,9 +13,9 @@ namespace GiftExchange.Services
         const string connectionString =
             @"Server=localhost\SQLEXPRESS;Database=GiftExchangeDB;Trusted_Connection=True;";
         
-        public List<Models.Presents> GetGiftList ()
+        public List<Presents> GetGiftList ()
         {
-            var rv = new List<Models.Presents>();
+            var rv = new List<Presents>();
             using (var connection = new SqlConnection(connectionString))
             {
                 var query = "SELECT * FROM PresentsFinal";
@@ -24,31 +24,37 @@ namespace GiftExchange.Services
                 var reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    rv.Add(new Models.Presents(reader));
+                    rv.Add(new Presents()
+                    {
+                        id = (int)reader["id"],
+                        Contents = reader["Contents"].ToString(),
+                        GiftHint = reader["GiftHint"].ToString(),
+                        ColorWrapper = reader["ColorWrapper"].ToString(),
+                        Height = (double?)reader["Height"],
+                        Width = (double?)reader["Width"],
+                        Depth = (double?)reader["Depth"],
+                        Weight = (double?)reader["Weight"],
+                        IsOpened = (bool)reader["IsOpened"]
+                });
                 }
                 connection.Close();
 
             }
                 return rv;
         }
-        public Presents AddGift (int id)
+        public static void AddGiftDB (Presents GiftNew)
         {
-            Presents gift = null;
+            const string connectionString =
+                            @"Server=localhost\SQLEXPRESS;Database=GiftExchangeDB;Trusted_Connection=True;";
             using (var connection = new SqlConnection(connectionString))
             {
-                var query = "SELECT";
+                var query = $"INSERT INTO [dbo].[PresentsFinal] ([Contents], [Gift Hint], [ColorWrapper], [Height], [Width], [Depth],[Weight],[IsOpened]) VALUES ({GiftNew.Contents}, {GiftNew.GiftHint}, {GiftNew.ColorWrapper}, {GiftNew.Height}, {GiftNew.Width}, {GiftNew.Depth}, {GiftNew.Weight}, {GiftNew.IsOpened})";
                 var cmd = new SqlCommand(query, connection);
-                cmd.Parameters.AddWithValue("@Id", id);
+                // cmd.Parameters.AddWithValue
                 connection.Open();
-                var reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    gift = new Presents(reader);
-                }
+                cmd.ExecuteNonQuery();
                 connection.Close();
-                
             }
-            return gift;
         }
     }
 }
