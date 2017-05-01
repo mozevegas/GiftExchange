@@ -24,31 +24,18 @@ namespace GiftExchange.Services
                 var reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    rv.Add(new Presents()
-                    {
-                        id = (int)reader["id"],
-                        Contents = reader["Contents"].ToString(),
-                        GiftHint = reader["GiftHint"].ToString(),
-                        ColorWrapper = reader["ColorWrapper"].ToString(),
-                        Height = (double?)reader["Height"],
-                        Width = (double?)reader["Width"],
-                        Depth = (double?)reader["Depth"],
-                        Weight = (double?)reader["Weight"],
-                        IsOpened = (bool)reader["IsOpened"]
-                });
+                    rv.Add(new Presents(reader));
                 }
                 connection.Close();
-
             }
-                return rv;
+            return rv;
         }
-        public static void AddGiftDB (Presents GiftNew)
+
+        public void AddGiftDB (Presents Present)
         {
-            const string connectionString =
-                            @"Server=localhost\SQLEXPRESS;Database=GiftExchangeDB;Trusted_Connection=True;";
             using (var connection = new SqlConnection(connectionString))
             {
-                var query = $"INSERT INTO [dbo].[PresentsFinal] ([Contents], [Gift Hint], [ColorWrapper], [Height], [Width], [Depth],[Weight],[IsOpened]) VALUES ({GiftNew.Contents}, {GiftNew.GiftHint}, {GiftNew.ColorWrapper}, {GiftNew.Height}, {GiftNew.Width}, {GiftNew.Depth}, {GiftNew.Weight}, {GiftNew.IsOpened})";
+                var query = $"INSERT INTO [dbo].[PresentsFinal] ([Contents], [Gift Hint], [ColorWrapper], [Height], [Width], [Depth],[Weight],[IsOpened]) VALUES({Present.Contents}, {Present.GiftHint}, {Present.ColorWrapper}, {Present.Height}, {Present.Width}, {Present.Depth}, {Present.Weight}, {Present.IsOpened})";
                 var cmd = new SqlCommand(query, connection);
                 // cmd.Parameters.AddWithValue
                 connection.Open();

@@ -11,61 +11,24 @@ namespace GiftExchange.Controllers
 {
     public class GiftsController : Controller
     {
-        // GET: Gifts
+        // View a List of all current presents
         public ActionResult Index()
         {
-            // get all gifts
-            var gifts = new GiftService().GetGiftList();
-            // pass to view
-            return View(gifts);
+            var Presents = new GiftService().GetGiftList();
+            return View(Presents);
         }
-
-        public ActionResult GiftList()
-        {
-            var gifts = new GiftService().GetGiftList();
-            return View(gifts);
-        }
-
-        [HttpGet]
-        public ActionResult AddGift()
+        // Add a Present to the Collection
+        public ActionResult Create()
         {
             return View();
         }
-
         [HttpPost]
-        public ActionResult AddGift(FormCollection collection)
+        public ActionResult Create (FormCollection collection)
         {
-            //// reading the forms
-            //var Contents = collection["Contents"];
-            //var GiftHint = collection["GiftHint"];
-            //var ColorWrapper = collection["ColorWrapper"];
-            //var Height = collection["Height"];
-            //var Width = collection["Width"];
-            //var Depth = collection["Depth"];
-            //var Weight = collection["Weight"];
-            //var IsOpened = collection["IsOpened"];
-
-            // make a new gift
-            var PresentNew = new Presents()
-            {
-                // id = int.Parse(collection["id"]),
-                Contents = collection["Contents"].ToString(),
-                GiftHint = collection["GiftHint"].ToString(),
-                ColorWrapper = collection["ColorWrapper"].ToString(),
-                Height = double.Parse(collection["Height"]),
-                Width = double.Parse(collection["Width"]),
-                Depth = double.Parse(collection["Depth"]),
-                Weight = double.Parse(collection["Weight"]),
-                IsOpened = false //bool.Parse(collection["IsOpened"])
-            };
-
-            // put it in the database
-
-            GiftService.AddGiftDB(PresentNew);
-
-            // send to index page
+            var present = new Presents();
+            UpdateModel(present);
+            var newPresent = new GiftService().AddGiftDB(present);
             return RedirectToAction("Index");
         }
-
     }
 }

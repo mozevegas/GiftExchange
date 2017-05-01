@@ -8,20 +8,7 @@ namespace GiftExchange.Models
 {
     public class Presents
     {
-        //public Presents(SqlDataReader reader)
-        //{
-        //    this.id = (int)reader["id"];
-        //    this.Contents = reader["Contents"].ToString();
-        //    this.GiftHint = reader["GiftHint"].ToString();
-        //    this.ColorWrapper = reader["ColorWrapper"].ToString();
-        //    this.Height = (double?)reader["Height"];
-        //    this.Width = (double?)reader["Width"];
-        //    this.Depth = (double?)reader["Depth"];
-        //    this.Weight = (double?)reader["Weight"];
-        //    this.IsOpened = (bool)reader["IsOpened"];
-        //}
-
-        public int id { get; set; }
+        public int Id { get; set; }
         public string Contents { get; set; }
         public string GiftHint { get; set; }
         public string ColorWrapper { get; set; }
@@ -30,5 +17,21 @@ namespace GiftExchange.Models
         public double? Depth { get; set; }
         public double? Weight { get; set; }
         public bool IsOpened { get; set; }
+
+        public Presents() { }
+
+        public Presents(SqlDataReader reader)
+        {
+            this.Id = (int)reader["id"];
+            this.Contents = reader["Contents"].ToString();
+            this.GiftHint = reader["GiftHint"].ToString();
+            this.ColorWrapper = reader["ColorWrapper"].ToString();
+            this.Height = (double?)reader["Height"];
+            this.Width = (double?)reader["Width"];
+            this.Depth = (double?)reader["Depth"];
+            this.Weight = (double?)reader["Weight"];
+            this.IsOpened = (bool)reader["IsOpened"];
+        }
+
     }
 }
