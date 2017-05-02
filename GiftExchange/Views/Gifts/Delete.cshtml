@@ -1,0 +1,80 @@
+﻿@model GiftExchange.Models.Presents
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Remove Gift</h2>
+
+<h3>Do you want to take this present away?</h3>
+<div>
+    <h4>This is a cool Present!</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Contents)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Contents)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GiftHint)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GiftHint)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ColorWrapper)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ColorWrapper)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Height)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Height)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Width)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Width)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Depth)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Depth)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Weight)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Weight)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="REMOVE IT!" class="btn btn-danger" />&nbsp;&nbsp; | &nbsp;&nbsp;
+            @Html.ActionLink("Never mind! I changed my mind!", "Index")
+        </div>
+    }
+</div>

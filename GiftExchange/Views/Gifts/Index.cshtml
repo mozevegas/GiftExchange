@@ -3,10 +3,10 @@
     ViewBag.Title = "Index";
 }
 
-<h2>GiftList</h2>
+<h2>the List of Presents</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Add Your Gift!", "Create")
 </p>
 <table class="table">
     <tr>
@@ -65,9 +65,9 @@
                 @Html.DisplayFor(modelItem => item.IsOpened)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                @Html.ActionLink("Fix", "Edit", new { id = item.Id }) |
+                @*@Html.ActionLink("Details", "Details", new { id = item.Id }) |*@
+                @Html.ActionLink("Remove it", "Delete", new { id = item.Id })
             </td>
         </tr>
     }
